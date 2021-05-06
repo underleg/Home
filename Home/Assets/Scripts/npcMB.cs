@@ -52,9 +52,19 @@ public class npcMB : MonoBehaviour
                 break;
             case NPCState.Wander:
                 m_timer = 3.0f; // 3 seconds 
-                m_animator.SetFloat("MoveSpeed", 0.2f);
+                m_animator.SetFloat("MoveSpeed", 0.4f);
                 m_currentNode = GridMB.Instance.GetNodeFromPosition(transform.position);
                 m_targetNode = GridMB.Instance.PickRandomNearbyOpenNode(m_currentNode, 1);
+
+                // have we moved?
+                if (m_currentNode == m_targetNode)
+                {
+                    InitState(NPCState.Idle);
+                }
+                else
+                {
+                    transform.LookAt(m_targetNode.m_pos);
+                }
                 break;
             default:
                 break;
@@ -101,16 +111,7 @@ public class npcMB : MonoBehaviour
                 break;
 
             case NPCState.Wander:       
-                r = Random.Range(0, 60);
-                if (r == 1)
-                {
-                    m_targetDirection += 30.0f;
-                }
-                else if(r == 2)
-                {
-                    m_targetDirection -= 30.0f;
-                }
-
+                
                 m_timer -= Time.deltaTime;
                 if (m_timer < 0.0f) // todo - replace with events in animator
                 {

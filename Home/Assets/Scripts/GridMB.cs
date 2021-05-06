@@ -41,9 +41,9 @@ public class GridMB : MonoBehaviour
     void Update()
     {
         
-    }void CreateNodes()
+    }
 
-    
+    void CreateNodes()
     {
         nodes = new Node[xSize, zSize];
 
@@ -53,37 +53,37 @@ public class GridMB : MonoBehaviour
         Vector3 sml2 = sml / 2;
         Vector3 sml3 = sml / 3;
 
-        for (int i = 0; i < xSize; ++i)
+
+            for (int i = 0; i < xSize; ++i)
         {
             for (int j = 0; j < zSize; ++j)
             {
                 Vector3 pos = new Vector3(i * side, 0, j * side);
-                bool open = Physics.CheckSphere(pos, side / 2, collisionObjects);
+                bool open = !(Physics.CheckSphere(pos, side / 6, collisionObjects));
+
                 nodes[i, j] = new Node(open, pos, i, j);
 
-                nodes[i, j].m_pathOpen[(int)Node.Direction.N]  = CheckPathOpen(i, j, 0,-1);
-                nodes[i, j].m_pathOpen[(int)Node.Direction.NE] = CheckPathOpen(i, j, 1,-1);
-                nodes[i, j].m_pathOpen[(int)Node.Direction.E]  = CheckPathOpen(i, j, 1, 0);
+                nodes[i, j].m_pathOpen[(int)Node.Direction.N] = CheckPathOpen(i, j, 0, -1);
+                nodes[i, j].m_pathOpen[(int)Node.Direction.NE] = CheckPathOpen(i, j, 1, -1);
+                nodes[i, j].m_pathOpen[(int)Node.Direction.E] = CheckPathOpen(i, j, 1, 0);
                 nodes[i, j].m_pathOpen[(int)Node.Direction.SE] = CheckPathOpen(i, j, 1, 1);
-                nodes[i, j].m_pathOpen[(int)Node.Direction.S]  = CheckPathOpen(i, j, 0, 1);
-                nodes[i, j].m_pathOpen[(int)Node.Direction.SW] = CheckPathOpen(i, j,-1, 1);
-                nodes[i, j].m_pathOpen[(int)Node.Direction.W]  = CheckPathOpen(i, j,-1, 0);
-                nodes[i, j].m_pathOpen[(int)Node.Direction.NW]  = CheckPathOpen(i, j,-1,-1);
+                nodes[i, j].m_pathOpen[(int)Node.Direction.S] = CheckPathOpen(i, j, 0, 1);
+                nodes[i, j].m_pathOpen[(int)Node.Direction.SW] = CheckPathOpen(i, j, -1, 1);
+                nodes[i, j].m_pathOpen[(int)Node.Direction.W] = CheckPathOpen(i, j, -1, 0);
+                nodes[i, j].m_pathOpen[(int)Node.Direction.NW] = CheckPathOpen(i, j, -1, -1);
 
                 nodes[i, j].m_adjacentNodes = new Node[(int)Node.Direction.NUM];
 
             }
-        }   
+        }
 
         for (int i = 0; i < xSize; ++i)
         {
             for (int j = 0; j < zSize; ++j)
             {
-                nodes[i, j] = null;
-
                 if (j > 0)
                     nodes[i, j].m_adjacentNodes[(int)Node.Direction.N] = nodes[i, j - 1];
-                if (j > 0 && i < xSize-1)
+                if (j > 0 && i < xSize - 1)
                     nodes[i, j].m_adjacentNodes[(int)Node.Direction.NE] = nodes[i + 1, j - 1];
                 if (i < xSize - 1)
                     nodes[i, j].m_adjacentNodes[(int)Node.Direction.E] = nodes[i + 1, j];
@@ -94,14 +94,28 @@ public class GridMB : MonoBehaviour
                 if (j < zSize - 1 && i > 0)
                     nodes[i, j].m_adjacentNodes[(int)Node.Direction.SW] = nodes[i - 1, j + 1];
                 if (i > 0)
-                    nodes[i, j].m_adjacentNodes[(int)Node.Direction.W] = nodes[i -1 , j];
+                    nodes[i, j].m_adjacentNodes[(int)Node.Direction.W] = nodes[i - 1, j];
                 if (j > 0 && i > 0)
                     nodes[i, j].m_adjacentNodes[(int)Node.Direction.NW] = nodes[i - 1, j - 1];
-
-
-
             }
         }
+
+
+        string s= "-- MAP ---------------------\n";
+        for (int j = 0; j < zSize; ++j)
+        {
+            for (int i = 0; i < xSize; ++i)
+            {
+                if (nodes[i, j].IsOpen())
+                    s += "0";
+                else
+                    s += "X";
+            }
+            s += "\n";
+        }
+        s+="----------------------------\n";
+        Debug.Log(s);
+
 
     }
 
@@ -202,6 +216,15 @@ public class GridMB : MonoBehaviour
                         Gizmos.color = GetAccessColour(i, j, 1, -1, true);
                         Gizmos.DrawWireCube(p + new Vector3(sml.x, 0, -sml.z), sml3);
 
+
+                        Gizmos.color = Color.white;
+  
+                        if (Physics.CheckSphere(p, sml.x/2, collisionObjects) == false)
+                        {
+                            Gizmos.color = Color.black;
+                        }
+                        Gizmos.DrawWireSphere(p, sml.x );
+
                     }
 
                     p.z += side;
@@ -256,7 +279,7 @@ public class GridMB : MonoBehaviour
         {
             res = false;
         }
-        else if(Physics.CheckSphere(start, side / 2) == false)
+        else if(Physics.CheckSphere(start, side / 6, collisionObjects) == false)
         {
             res = false;
         }
