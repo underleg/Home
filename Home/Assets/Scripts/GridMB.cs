@@ -101,6 +101,7 @@ public class GridMB : MonoBehaviour
         }
 
 
+        /* print map
         string s= "-- MAP ---------------------\n";
         for (int j = 0; j < zSize; ++j)
         {
@@ -115,6 +116,7 @@ public class GridMB : MonoBehaviour
         }
         s+="----------------------------\n";
         Debug.Log(s);
+        */
 
 
     }
@@ -125,9 +127,6 @@ public class GridMB : MonoBehaviour
         int j = Mathf.RoundToInt(pos.z / side);
         i = Mathf.Clamp(i, 0, xSize - 1); 
         j = Mathf.Clamp(j, 0, zSize - 1);
-
-        Debug.Log("i = " + i);
-        Debug.Log("j = " + j);
 
         return nodes[i, j];
     }
@@ -216,15 +215,13 @@ public class GridMB : MonoBehaviour
                         Gizmos.color = GetAccessColour(i, j, 1, -1, true);
                         Gizmos.DrawWireCube(p + new Vector3(sml.x, 0, -sml.z), sml3);
 
-
-                        Gizmos.color = Color.white;
+                     
   
-                        if (Physics.CheckSphere(p, sml.x/2, collisionObjects) == false)
+                        if (Physics.CheckSphere(p, sml.x/2, collisionObjects) == true)
                         {
                             Gizmos.color = Color.black;
-                        }
-                        Gizmos.DrawWireSphere(p, sml.x );
-
+                            Gizmos.DrawWireSphere(p, sml.x);
+                        }                      
                     }
 
                     p.z += side;
@@ -279,7 +276,7 @@ public class GridMB : MonoBehaviour
         {
             res = false;
         }
-        else if(Physics.CheckSphere(start, side / 6, collisionObjects) == false)
+        else if(Physics.CheckSphere(start, side / 6, collisionObjects) == true)
         {
             res = false;
         }
@@ -294,5 +291,6 @@ public class GridMB : MonoBehaviour
 
         return res;
     }
+
 
 }
