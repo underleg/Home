@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
 public class PathFinderMB : MonoBehaviour
 {
     private static PathFinderMB instance;
     public static PathFinderMB Instance { get { return instance; } }
 
+    PathRequestManagerMB m_requestManager;
+
+    /// <summary>
+    /// 
+    /// </summary>
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -17,49 +23,67 @@ public class PathFinderMB : MonoBehaviour
         {
             instance = this;
         }
+
+        m_requestManager = GetComponent<PathRequestManagerMB>();
     }
 
-    public List<Node> FindPath(Vector3 start, Vector3 end)
+    /// <summary>
+    /// initiates a coroutine to calculate a A* path
+    /// </summary>
+    /// <param name="startPos"></param>
+    /// <param name="targetPos"></param>
+    public void StartFindPath(Vector3 startPos, Vector3 targetPos)
+    {
+        StartCoroutine(FindPath(startPos, targetPos));
+    }
+
+
+    /// <summary>
+    /// Coroutine to calc path
+    /// </summary>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    /// <returns></returns>
+    IEnumerator FindPath(Vector3 start, Vector3 end)
     {
         List<Node> res = null;
+        bool pathSuccess = false;
+
 
         Node startNode = GridMB.Instance.GetNodeFromPosition(start);
         Node targetNode = GridMB.Instance.GetNodeFromPosition(end);
 
-        List<Node> openSet = new List<Node>();
+        Heap<Node> openSet = new Heap<Node>(GridMB.Instance.MaxHeapSize());
         List<Node> closeSet = new List<Node>();
 
         openSet.Add(startNode);
 
         int cnt = 0;
 
+        int largestOpenSet = 0;
+
         while (openSet.Count > 0)
         {
             cnt++;
-            if (cnt > 1000 || openSet.Count > 1000 || closeSet.Count > 1000)
+            if (cnt > 5000)
             {
-                Debug.Log("failed to find path");
+                print("failed to find path");
                 break;
             }
 
-            // find lowest fCost
-            Node current = openSet[0];
-            for(int i = 1; i < openSet.Count; ++i)
+            if(openSet.Count > largestOpenSet)
             {
-                if(openSet[i].fCost < current.fCost ||
-                   (openSet[i].fCost == current.fCost && openSet[i].hCost < current.hCost))
-                {
-                    current = openSet[i];
-                }
+                largestOpenSet = openSet.Count;
             }
 
-            
-            openSet.Remove(current);
+            // find lowest fCost
+            Node current = openSet.RemoveFirst();
             closeSet.Add(current);
 
             // found target
             if(current == targetNode)
             {
+                pathSuccess = true;
                 res = CreatePathList(startNode, targetNode);
                 break;
             }
@@ -88,11 +112,18 @@ public class PathFinderMB : MonoBehaviour
             }
         }
 
-        return res;
-   
+        yield return null;
+
+        m_requestManager.FinishedProcessingPath(res, pathSuccess);
     }
 
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     public int GetGridDistanceBetweenNodes(Node a, Node b)
     {
         int dx = Mathf.Abs(b.m_xGridPos - a.m_xGridPos);
@@ -115,6 +146,12 @@ public class PathFinderMB : MonoBehaviour
         return diagonalSteps * 14 + straightSteps * 10; // 10/10/14 R.A.Triangle
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="startNode"></param>
+    /// <param name="targetNode"></param>
+    /// <returns></returns>
     List<Node> CreatePathList(Node startNode, Node targetNode)
     {
         List<Node> res = new List<Node>();
@@ -127,11 +164,42 @@ public class PathFinderMB : MonoBehaviour
         }
 
         res.Reverse(); // so it 
-      
-        return res;
 
+        // res = SimplifyPath(res);
+
+        return res;
     }
-   void PrintPath(Node startNode, List<Node> path)
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    List<Node> SimplifyPath(List<Node> path)
+    {
+        if (path.Count <= 1) return path;
+
+        List<Node> res = new List<Node>();
+        Vector3 directionOld = Vector2.zero;
+
+        for (int i = 1; i < path.Count; i++)
+        {
+            Vector3 directionNew = path[i].m_pos - path[i - 1].m_pos;
+  
+            if (directionNew != directionOld)
+            {
+                res.Add(path[i]);
+            }
+            directionOld = directionNew;
+        }
+
+        print("simpified path: " + path.Count + " -> " + res.Count);
+        return res;
+    }
+
+
+    void PrintPath(Node startNode, List<Node> path)
     {
         string s = "\n ------------------------------- \n";
         s += " " + startNode.m_xGridPos + ", " + startNode.m_zGridPos + "\n";
@@ -141,7 +209,7 @@ public class PathFinderMB : MonoBehaviour
         }
         s += "------------------------------- \n";
 
-        Debug.Log(s);
+        print(s);
     }
 
 }

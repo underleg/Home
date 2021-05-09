@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class npcMB : MonoBehaviour
+public class npcMB : MovingObjectMB
 {
     [SerializeField] private Animator m_animator = null;
     // [SerializeField] private Rigidbody m_rigidBody = null;
@@ -20,8 +20,7 @@ public class npcMB : MonoBehaviour
     };
 
     NPCState m_state = NPCState.Undefined;
-    int m_substate = 0;
-
+    
     float m_timer;
 
     float m_targetDirection = 180.0f;
@@ -31,24 +30,52 @@ public class npcMB : MonoBehaviour
 
     List<Node> m_path;
 
+    
+   float m_turnSpeed = 2.0f;
+
+    public float m_moveSpeed = 1.5f;
+
+    public Vector3 m_forward;
+
+    public MBThoughtBubble m_thoughtBubble;
+
+    bool m_pauseWalk = false;
+
+ 
     // Start is called before the first frame update
-    void Start()
+    override protected void Start()
     {
-        if (!m_animator) 
-        { 
-            m_animator = gameObject.GetComponent<Animator>(); 
-        }
-        
+        base.Start();
+        m_animator = gameObject.GetComponent<Animator>(); 
         InitState(NPCState.Idle);
         
+    }
+
+    private void Awake()
+    {
+        UpdateForwardVector();
+    }
+
+    override protected void Update()
+    {
+        base.Update();
+        UpdateForwardVector();
+    }
+
+    void UpdateForwardVector()
+    {
+        Vector3 rot = transform.localEulerAngles;
+        rot *= Mathf.Deg2Rad;
+
+        this.m_forward = transform.position;
+        m_forward += new Vector3(Mathf.Sin(rot.y), 0f, Mathf.Cos(rot.y));
     }
 
     // Initialise local state
     void InitState(NPCState newState)
     {
         m_state = newState;
-        m_substate = 0;
-
+        
         switch (newState)
         {
             case NPCState.Idle:
@@ -61,10 +88,6 @@ public class npcMB : MonoBehaviour
 
             case NPCState.Wander:
                 InitWander();
-                break;
-
-            case NPCState.Head_to_Target:
-                InitHeadToTarget();
                 break;
 
             default:
@@ -88,111 +111,120 @@ public class npcMB : MonoBehaviour
                 HandleWave();
                 break;
 
-            case NPCState.Wander:
-                HandleWander();
-                break;
-
-            case NPCState.Head_to_Target:
-                HandleHeadToTarget();
+            case NPCState.Wander:               
                 break;
 
             default:
                 break;
         }
 
-        HandleTurning();
     }
 
-    /// WANDER STATE ///
+    /// <summary>
+    /// WANDER STATE 
+    /// </summary>
     private void InitWander()
     {
-        m_timer = 3.0f; // 3 seconds 
         m_animator.SetFloat("MoveSpeed", 0.4f);
         m_currentNode = GridMB.Instance.GetNodeFromPosition(transform.position);
-        m_targetNode = GridMB.Instance.PickRandomNearbyOpenNode(m_currentNode, 1);
+      
+        m_targetNode = GridMB.Instance.PickRandomNearbyOpenNode(m_currentNode, 10);
+        PathRequestManagerMB.RequestPath(transform.position, m_targetNode.m_pos, OnWanderPathFound);
+    }
 
-        // have we moved?
-        if (m_currentNode == m_targetNode)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="newPath"></param>
+    /// <param name="pathSuccessful"></param>
+    public void OnWanderPathFound(List<Node> newPath, bool pathSuccessful)
+    {
+        if (pathSuccessful)
         {
-            InitState(NPCState.Idle);
+            m_path = newPath;
+            //targetIndex = 0;
+            StopCoroutine("FollowWanderPath");
+            StartCoroutine("FollowWanderPath");
         }
         else
         {
-            transform.LookAt(m_targetNode.m_pos);
-        }
-    }
-
-    private void HandleWander()
-    {
-        m_timer -= Time.deltaTime;
-        if (m_timer < 0.0f) // todo - replace with events in animator
-        {
-            this.transform.position = this.m_targetNode.m_pos;
             InitState(NPCState.Idle);
         }
     }
 
-    /// HEAD TO TARGET STATE ///
-    private void InitHeadToTarget()
+    /// <summary>
+    /// coroutine to carry out wnader state
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator FollowWanderPath()
     {
-        GameObject tgt = GameObject.Find("TestTarget");
+        m_animator.SetFloat("MoveSpeed", 0.4f);
+     
+        while (true)
+        {      
+            if (Utils.VectorsCloseToEqual(transform.position, m_path[0].m_pos))               
+            {
+                m_path.RemoveAt(0);
+                if (m_path.Count == 0)
+                {
+                    InitState(NPCState.Idle);
+                    yield break;
+                }
+            }
 
-        float dbp = Utils.DistBetweenPoints(transform.position, tgt.transform.position);
-        if ( dbp < Consts.closeEnough)
-        {
-            InitState(NPCState.Idle);
-        }
-        else
-        {
-            m_path = PathFinderMB.Instance.FindPath(transform.position, tgt.transform.position);
+            TurnToFaceTarget(new Vector3(
+                m_path[0].m_pos.x,
+                transform.position.y,
+                m_path[0].m_pos.z));
+
+
+            if (GiveWay(m_path[0].m_pos) == false)
+            {
+                transform.position = Vector3.MoveTowards(
+                    transform.position,
+                    m_path[0].m_pos,
+                    m_moveSpeed * Time.deltaTime);
+            }
+
+           
+            yield return null;
         }
     }
 
-    private void HandleHeadToTarget()
+    bool GiveWay(Vector3 tgt)
     {
-        // 0 = turn to node
-        switch (m_substate)
+        bool res = false;
+        
+        Vector3 step = (tgt - transform.position).normalized;
+        Vector3 pos = transform.position;
+        for (int i = 1; res == false && i <= 2; ++i)
         {
-            case 0: // turn and look
-                m_animator.SetFloat("MoveSpeed", 0.4f);
-                transform.LookAt(m_path[0].m_pos);
-                m_timer = 1.0f;
-                m_substate++;
-                break;
-
-            case 1: // wait
-                m_timer -= Time.deltaTime;
-                if (m_timer < 0.0f) // todo - replace with events in animator
-                {
-                    m_substate++;
-                }
-                break;
-
-            case 2: // move
-                this.transform.position = m_path[0].m_pos;
-                if (AtTargetNode(m_path[0]))
-                {
-                    this.transform.position = m_path[0].m_pos;
-                    m_path.RemoveAt(0);
-
-                    if (m_path.Count == 0) // arrived
-                    {
-                        InitState(NPCState.Idle);
-                    }
-                    else
-                    {
-                        m_substate = 0;
-                    }
-                }
-                break;
-
-            default:
-                Debug.LogError("bad state");
-                m_substate = 0;
-                break;
+            Vector3 newPos = pos + step;
+            QueryTriggerInteraction query = new QueryTriggerInteraction();
+            if (Physics.Linecast(pos, newPos, 7, query))
+            {
+                print("collison " + query.ToString());
+                m_pauseWalk = true;
+                res = true;
+            }
         }
+        
+        return res;
     }
 
+
+    void TurnToFaceTarget(Vector3 tgt)
+    {
+        Vector3 fwd = (m_forward - transform.position).normalized;
+        tgt = (tgt - transform.position).normalized;
+
+        //create the rotation we need to be in to look at the target
+        Quaternion lookRotation = Quaternion.LookRotation(tgt);
+
+        //rotate us over time according to speed until we are in the required rotation
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * m_turnSpeed);
+    
+    }
 
     /// WAVE STATE ///
     private void InitWave()
@@ -219,41 +251,20 @@ public class npcMB : MonoBehaviour
 
     void HandleIdle()
     {
-        int r = Random.Range(0, 60);
+        int r = Random.Range(0, 120);
         if (r == 1)
         {
             InitState(NPCState.Wave);
         }
-        else if (r == 2)
+        else if (r == 2 || r == 3)
         {
-            InitState(NPCState.Head_to_Target);
+            InitState(NPCState.Wander);
+        }
+        else if(r == 4)
+        {
+            m_thoughtBubble.ShowThought("...");
         }
     }
-
-    void HandleTurning()
-    {
-        //m_animator.SetFloat("MoveSpeed", 0.2f);
-
-        Vector3 playerRot = transform.localEulerAngles;
-
-        float degrees = 0.0f;
-
-        if (Mathf.Abs(playerRot.y - m_targetDirection) < 5.0f)
-        {
-            degrees = m_targetDirection - playerRot.y;
-        }
-        else if (playerRot.y < m_targetDirection)
-        {
-            degrees -= 10.0f * Time.deltaTime;
-        }
-        else if (playerRot.y > m_targetDirection)
-        {
-            degrees += 10.0f * Time.deltaTime;
-        }
-
-        transform.Rotate(0, degrees, 0);
-    }
-
 
 
     bool AtTargetNode(Node n)
@@ -270,5 +281,23 @@ public class npcMB : MonoBehaviour
             return res;
         }
     }
+
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        if(m_path != null && m_path.Count > 1)
+        {
+            Vector3 stt = transform.position;
+            for(int i = 0; i < m_path.Count; ++i)
+            {
+                Gizmos.DrawLine(stt, m_path[i].m_pos);
+                stt = m_path[i].m_pos;
+            }
+        }
+
+        Gizmos.DrawLine(transform.position, m_forward);
+    }
+
 
 }

@@ -37,7 +37,7 @@ using UnityEngine;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, m_innerRadius);
 
-        // draw forward line
+        // draw m_forward line
         /*
         Vector3 playerRot = PlayerMB.Instance.transform.localEulerAngles;
         playerRot *= Mathf.Deg2Rad;
@@ -112,7 +112,7 @@ using UnityEngine;
 
         Vector3 v1 = PlayerMB.Instance.transform.position - transform.position;
         
-        Vector3 v2 = PlayerMB.Instance.forward - transform.position;
+        Vector3 v2 = PlayerMB.Instance.m_forward - transform.position;
         
         if(v2.sqrMagnitude < v1.sqrMagnitude)
         {

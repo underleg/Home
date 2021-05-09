@@ -10,7 +10,7 @@ public class PlayerMB : MonoBehaviour
     private static PlayerMB instance;
     public static PlayerMB Instance { get { return instance; } }
 
-    public Vector3 forward;
+    public Vector3 m_forward;
 
 
     MBThoughtBubble thoughtBubble;
@@ -64,15 +64,15 @@ public class PlayerMB : MonoBehaviour
         Vector3 playerRot = transform.localEulerAngles;
         playerRot *= Mathf.Deg2Rad;
         
-        this.forward= transform.position;
-        forward += new Vector3(Mathf.Sin(playerRot.y), 0f, Mathf.Cos(playerRot.y)) * 0.25f;
+        this.m_forward= transform.position;
+        m_forward += new Vector3(Mathf.Sin(playerRot.y), 0f, Mathf.Cos(playerRot.y));
     }
 
     void OnDrawGizmosSelected()
     {
         UpdateForwardVector();
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, forward);
+        Gizmos.DrawLine(transform.position, m_forward);
 
 
     }

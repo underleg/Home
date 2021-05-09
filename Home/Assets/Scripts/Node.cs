@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node
+public class Node : IHeapItem<Node>
 {
     public enum Direction
     {
@@ -32,6 +32,8 @@ public class Node
     public int hCost = 0;
 
     public Node m_pathParent;
+
+    int m_heapIndex;
 
 
     public Node(bool open, Vector3 pos, int xPos, int zPos)
@@ -68,4 +70,25 @@ public class Node
         return res;
     }
 
+    public int HeapIndex
+    {
+        get
+        {
+            return m_heapIndex;
+        }
+        set
+        {
+            m_heapIndex = value;
+        }
+    }
+
+    public int CompareTo(Node nodeToCompare)
+    {
+        int compare = fCost.CompareTo(nodeToCompare.fCost);
+        if(compare == 0)
+        {
+            compare = hCost.CompareTo(nodeToCompare.hCost);
+        }
+        return -compare;
+    }
 }

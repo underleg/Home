@@ -19,6 +19,7 @@ public class GridMB : MonoBehaviour
     private static GridMB instance;
     public static GridMB Instance { get { return instance; } }
 
+    
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -291,6 +292,12 @@ public class GridMB : MonoBehaviour
 
         return res;
     }
+
+    public int MaxHeapSize()
+    {
+        return xSize * zSize;
+    }
+
 
 
 }
