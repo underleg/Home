@@ -8,8 +8,7 @@ using UnityEngine;
         
         public LayerMask movingCollisionObjects;
 
-
-
+    
         // Use this for initialization
         void Awake()
         {

@@ -42,7 +42,7 @@ using UnityEngine;
         Vector3 playerRot = PlayerMB.Instance.transform.localEulerAngles;
         playerRot *= Mathf.Deg2Rad;
         Vector3 playerForward = PlayerMB.Instance.transform.position;
-        playerForward += new Vector3(Mathf.Cos(playerRot.y), 0f, Mathf.Cos(playerRot.y));
+        playerForward += new Vector3(Mathf.Cos(playerRot.y), 0f, Mathf.Sin(playerRot.y));
 
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(PlayerMB.Instance.transform.position, playerForward);

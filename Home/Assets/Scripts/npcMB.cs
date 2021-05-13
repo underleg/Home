@@ -41,6 +41,10 @@ public class npcMB : MovingObjectMB
 
     bool m_pauseWalk = false;
 
+    float m_walkSpeed = 0.4f;
+
+    Collider m_myCollider;
+
  
     // Start is called before the first frame update
     override protected void Start()
@@ -48,7 +52,10 @@ public class npcMB : MovingObjectMB
         base.Start();
         m_animator = gameObject.GetComponent<Animator>(); 
         InitState(NPCState.Idle);
-        
+
+        m_myCollider = gameObject.GetComponent<Collider>();
+
+
     }
 
     private void Awake()
@@ -99,23 +106,25 @@ public class npcMB : MovingObjectMB
     {
         if (!m_animator) return;
 
-        m_animator.SetBool("Grounded", true);
-
-        switch (m_state)
         {
-            case NPCState.Idle:
-                HandleIdle();
-                break;
+            m_animator.SetBool("Grounded", true);
 
-            case NPCState.Wave:
-                HandleWave();
-                break;
+            switch (m_state)
+            {
+                case NPCState.Idle:
+                    HandleIdle();
+                    break;
 
-            case NPCState.Wander:               
-                break;
+                case NPCState.Wave:
+                    HandleWave();
+                    break;
 
-            default:
-                break;
+                case NPCState.Wander:
+                    break;
+
+                default:
+                    break;
+            }
         }
 
     }
@@ -125,7 +134,7 @@ public class npcMB : MovingObjectMB
     /// </summary>
     private void InitWander()
     {
-        m_animator.SetFloat("MoveSpeed", 0.4f);
+        m_animator.SetFloat("MoveSpeed", m_walkSpeed);
         m_currentNode = GridMB.Instance.GetNodeFromPosition(transform.position);
       
         m_targetNode = GridMB.Instance.PickRandomNearbyOpenNode(m_currentNode, 10);
@@ -158,8 +167,6 @@ public class npcMB : MovingObjectMB
     /// <returns></returns>
     IEnumerator FollowWanderPath()
     {
-        m_animator.SetFloat("MoveSpeed", 0.4f);
-     
         while (true)
         {      
             if (Utils.VectorsCloseToEqual(transform.position, m_path[0].m_pos))               
@@ -180,11 +187,16 @@ public class npcMB : MovingObjectMB
 
             if (GiveWay(m_path[0].m_pos) == false)
             {
+                m_animator.SetFloat("MoveSpeed", m_walkSpeed);
                 transform.position = Vector3.MoveTowards(
                     transform.position,
                     m_path[0].m_pos,
                     m_moveSpeed * Time.deltaTime);
             }
+            else
+            {
+                m_animator.SetFloat("MoveSpeed", 0.0f);
+            }    
 
            
             yield return null;
@@ -193,23 +205,27 @@ public class npcMB : MovingObjectMB
 
     bool GiveWay(Vector3 tgt)
     {
+        /*
         bool res = false;
         
         Vector3 step = (tgt - transform.position).normalized;
         Vector3 pos = transform.position;
-        for (int i = 1; res == false && i <= 2; ++i)
+        pos.y -= 0.5f;
+        m_myCollider.enabled = false; // disalbe our own collider
+
+        RaycastHit hit;
+
+        if(Physics.SphereCast(pos, 0.01f, transform.forward, out hit) == true)
         {
-            Vector3 newPos = pos + step;
-            QueryTriggerInteraction query = new QueryTriggerInteraction();
-            if (Physics.Linecast(pos, newPos, 7, query))
-            {
-                print("collison " + query.ToString());
-                m_pauseWalk = true;
-                res = true;
-            }
+            print("collison ");
+            m_pauseWalk = true;
+            res = true;
         }
-        
+        m_myCollider.enabled = true;
+  
         return res;
+        */
+        return false;
     }
 
 
@@ -296,6 +312,7 @@ public class npcMB : MovingObjectMB
             }
         }
 
+        Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, m_forward);
     }
 

@@ -149,6 +149,8 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         float v = Input.GetAxis("Vertical");
         float h = Input.GetAxis("Horizontal");
 
+        
+
         bool walk = Input.GetKey(KeyCode.LeftShift);
 
         if (v < 0)
