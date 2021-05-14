@@ -10,7 +10,7 @@ public class DuckMB : InteractiveObjectMB
     // Start is called before the first frame update
     override protected void Start()
     {
-
+        m_collectable = true;
     }
 
     // Update is called once per frame

@@ -16,6 +16,7 @@ using UnityEngine;
     public float m_outerRadius = 3.0f; // player can turn on / pick up etc
     public float m_innerRadius = 1.0f; // object is close enough to player to attract attention
 
+    protected bool m_collectable = false;
  
     // Use this for initialization
     virtual protected void Start()
@@ -26,6 +27,11 @@ using UnityEngine;
     virtual protected void Update()
     {
 
+    }
+
+    public bool IsCollectable()
+    {
+        return m_collectable;
     }
 
     void OnDrawGizmosSelected()
