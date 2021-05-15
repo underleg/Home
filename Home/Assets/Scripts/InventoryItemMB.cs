@@ -14,6 +14,13 @@ public class InventoryItemMB : MonoBehaviour
 
     float m_rotationStart;
 
+    public GameObject CollectedObject
+    {
+        get;
+        set;
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {

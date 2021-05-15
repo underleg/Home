@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class InventoryMB : MonoBehaviour
 {
+    private static InventoryMB instance;
+    public static InventoryMB Instance { get { return instance; } }
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+
     public List<GameObject> m_itemPrefabs;
 
     public List<GameConstants.ObjectId> m_inventoryList;
@@ -66,9 +75,32 @@ public class InventoryMB : MonoBehaviour
         }
     }
 
+    public int CurrentItemCount()
+    {
+        return m_inventoryList.Count;
+    }
+
+    public int MaxItems()
+    {
+        return m_inventory_width * m_inventory_height;
+    }
+
+    public void AddNewItem(InteractiveObjectMB obj)
+    {
+        print("Adding new item");
+        m_inventoryList.Add(obj.m_objectId);
+        GameObject go = GetItemPrefab(obj.m_objectId);
+        GameObject newGO = GameObject.Instantiate(go, this.transform);
+
+        go.GetComponent<InventoryItemMB>().CollectedObject = obj.gameObject;
+        obj.gameObject.SetActive(false);
+        m_items.Add(newGO);
+        AlignItems();
+    }
+
     void CreateItemInstances()
     {
-        Debug.Assert(m_inventoryList.Count < m_inventory_width * m_inventory_height);
+        Debug.Assert(m_inventoryList.Count <= MaxItems());
         for(int i = 0; i < m_inventoryList.Count; ++i)
         {
             GameObject go = GetItemPrefab(m_inventoryList[i]);
@@ -290,6 +322,7 @@ public class InventoryMB : MonoBehaviour
         m_moveInventoryCoroutine = null;
     }
 
+
     private void OnDrawGizmosSelected()
     {
         float sz = 0.2f;
@@ -311,25 +344,6 @@ public class InventoryMB : MonoBehaviour
         
     }
 
-    /*
-    /// </summary>
-    void AlignItems()
-    {
-        float x = m_inventoryTile_start_pos_x;
-        float y = m_inventoryTile_start_pos_z;
-
-
-        for (int i = 0; i < m_items.Count; ++i)
-        {
-            Vector2 v2 = GetTilePositionFromIndex(i);
-
-            Vector3 p = m_items[i].transform.localPosition;
-            p.x = v2.x;
-            p.z = v2.y;
-            m_items[i].transform.localPosition = p;
-        }
-    }
-    */
 
 
 }

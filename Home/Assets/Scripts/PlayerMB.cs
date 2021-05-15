@@ -57,7 +57,6 @@ public class PlayerMB : MonoBehaviour
         }
     }
 
-
     void UpdateForwardVector()
     {
         Vector3 playerRot = transform.localEulerAngles;
@@ -72,8 +71,6 @@ public class PlayerMB : MonoBehaviour
         UpdateForwardVector();
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, m_forward);
-
-
     }
 
     public InteractiveObjectMB InteractiveObject
@@ -87,12 +84,22 @@ public class PlayerMB : MonoBehaviour
     {
         bool res = false;
 
-        if(InteractiveObject != null && InteractiveObject.IsCollectable())
+        if( InteractiveObject != null && 
+            InteractiveObject.IsCollectable() && 
+            InventoryMB.Instance.CurrentItemCount() < InventoryMB.Instance.MaxItems() )
         {
             res = true;
         }
 
         return res;
+    }
 
+    public void PickUp()
+    {
+        if (CanPickUpInteractiveObject())
+        {
+            InventoryMB.Instance.AddNewItem(InteractiveObject);
+            InteractiveObject = null;
+        }
     }
 }
