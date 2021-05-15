@@ -11,7 +11,6 @@ public class FireHydrantMB : InteractiveObjectMB
     // Start is called before the first frame update
     override protected void Start()
     {
-
     }
 
     // Update is called once per frame

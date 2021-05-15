@@ -12,7 +12,6 @@ public class PlayerMB : MonoBehaviour
 
     public Vector3 m_forward;
 
-
     MBThoughtBubble thoughtBubble;
 
     private void Awake()
@@ -48,7 +47,7 @@ public class PlayerMB : MonoBehaviour
     {
         foreach (ContactPoint contact in collision.contacts)
         {
-            if(contact.otherCollider.gameObject.name != "Ground")
+            if (contact.otherCollider.gameObject.name != "Ground")
             {
                 thoughtBubble.ShowThought("Ouch!");
             }
@@ -63,8 +62,8 @@ public class PlayerMB : MonoBehaviour
     {
         Vector3 playerRot = transform.localEulerAngles;
         playerRot *= Mathf.Deg2Rad;
-        
-        this.m_forward= transform.position;
+
+        this.m_forward = transform.position;
         m_forward += new Vector3(Mathf.Sin(playerRot.y), 0f, Mathf.Cos(playerRot.y));
     }
 
@@ -74,6 +73,26 @@ public class PlayerMB : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, m_forward);
 
+
+    }
+
+    public InteractiveObjectMB InteractiveObject
+    {
+        get;
+        set;
+    }
+
+
+    public bool CanPickUpInteractiveObject()
+    {
+        bool res = false;
+
+        if(InteractiveObject != null && InteractiveObject.IsCollectable())
+        {
+            res = true;
+        }
+
+        return res;
 
     }
 }

@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class InventoryMB : MonoBehaviour
 {
-    public List<GameObject> m_items;
+    public List<GameObject> m_itemPrefabs;
+
+    public List<GameConstants.ObjectId> m_inventoryList;
+
     public GameObject m_inventoryTile;
+
+    List<GameObject> m_items = new List<GameObject>();
 
     float m_inventory_y_offscreen = -6.0f;
     float m_inventory_y_onscreen = 0.0f;
@@ -41,11 +46,50 @@ public class InventoryMB : MonoBehaviour
         pos.z = m_inventoryTile_start_pos_z;
         m_inventoryTile.transform.localPosition = pos;
 
-        //m_inventoryTile.transform.localPosition.x;
-        //m_inventoryTile.transform.localPosition.z;
-        InventoryItemMB.m_selected = m_items[0].GetComponent<InventoryItemMB>();
+        DestroyItemInstances();
+        CreateItemInstances();
 
-        AlignItems();
+        if (m_items.Count > 0)
+        {
+            InventoryItemMB.m_selected = m_items[0].GetComponent<InventoryItemMB>();
+            AlignItems();
+        }
+    }
+
+    void DestroyItemInstances()
+    {
+        while(m_items.Count > 0)
+        {
+            GameObject go = m_items[0];
+            m_items.RemoveAt(0);
+            Destroy(go);
+        }
+    }
+
+    void CreateItemInstances()
+    {
+        Debug.Assert(m_inventoryList.Count < m_inventory_width * m_inventory_height);
+        for(int i = 0; i < m_inventoryList.Count; ++i)
+        {
+            GameObject go = GetItemPrefab(m_inventoryList[i]);
+            GameObject newGO = GameObject.Instantiate(go, this.transform);
+            m_items.Add(newGO);
+        }
+    }
+
+    GameObject GetItemPrefab(GameConstants.ObjectId id)
+    {
+        GameObject res = null;
+
+        for (int i = 0; res == null && i < m_itemPrefabs.Count; ++i)
+        {
+            if(m_itemPrefabs[i].GetComponent<InventoryItemMB>().m_objectId == id)
+            {
+                res = m_itemPrefabs[i];
+            }
+        }
+
+        return res;
     }
 
     /// <summary>
@@ -55,7 +99,6 @@ public class InventoryMB : MonoBehaviour
     {
         float x = m_inventoryTile_start_pos_x;
         float y = m_inventoryTile_start_pos_z;
-
 
         for (int i = 0; i < m_items.Count; ++i)
         {

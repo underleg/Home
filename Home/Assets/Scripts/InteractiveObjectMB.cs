@@ -13,8 +13,10 @@ using UnityEngine;
 
     protected PlayerState m_playerState = PlayerState.undefined;
 
-    public float m_outerRadius = 3.0f; // player can turn on / pick up etc
-    public float m_innerRadius = 1.0f; // object is close enough to player to attract attention
+    public float m_outerRadius = 2.0f; // player can turn on / pick up etc
+    public float m_innerRadius = 0.4f; // object is close enough to player to attract attention
+
+    public GameConstants.ObjectId m_objectId = GameConstants.ObjectId.NONE;
 
     protected bool m_collectable = false;
  
@@ -34,29 +36,7 @@ using UnityEngine;
         return m_collectable;
     }
 
-    void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, m_outerRadius);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, m_innerRadius);
-
-        // draw m_forward line
-        /*
-        Vector3 playerRot = PlayerMB.Instance.transform.localEulerAngles;
-        playerRot *= Mathf.Deg2Rad;
-        Vector3 playerForward = PlayerMB.Instance.transform.position;
-        playerForward += new Vector3(Mathf.Cos(playerRot.y), 0f, Mathf.Sin(playerRot.y));
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(PlayerMB.Instance.transform.position, playerForward);
-        */
-
-
-    }
-
+    
     protected bool UpdatePlayerState()
     {
         bool res = true; // true means stqate changed
@@ -89,9 +69,12 @@ using UnityEngine;
             case PlayerState.Player_inside_active_zone:
                 if (dist < m_innerRadius)
                 {
-                    if(IsPlayerFacingObject())
+                    if (IsPlayerFacingObject())
+                    {
                         m_playerState = PlayerState.Player_inside_interactive_zone;
-                }
+                        PlayerMB.Instance.InteractiveObject = this;
+                    }
+                    }
                 else if (dist >= m_outerRadius)
                     m_playerState = PlayerState.Player_outside_active_zone;
                 else
@@ -100,9 +83,21 @@ using UnityEngine;
 
             case PlayerState.Player_inside_interactive_zone:
                 if (dist >= m_outerRadius)
+                {
                     m_playerState = PlayerState.Player_outside_active_zone;
+                    if (PlayerMB.Instance.InteractiveObject == this)
+                    {
+                        PlayerMB.Instance.InteractiveObject = null;
+                    }
+                }
                 else if (dist >= m_innerRadius || IsPlayerFacingObject() == false)
+                {
                     m_playerState = PlayerState.Player_inside_active_zone;
+                    if (PlayerMB.Instance.InteractiveObject == this)
+                    {
+                        PlayerMB.Instance.InteractiveObject = null;
+                    }
+                }
                 else
                     res = false;
                 break;
@@ -116,11 +111,17 @@ using UnityEngine;
     {
         bool res = false;
 
-        Vector3 v1 = PlayerMB.Instance.transform.position - transform.position;
+        Vector3 pVec = PlayerMB.Instance.transform.position;
+        pVec.y = transform.position.y;
+        Vector3 pFor = PlayerMB.Instance.transform.forward * 0.2f;
+        pFor.y = transform.position.y;
+        pFor += pVec;
+
+        Vector3 v1 = pVec - transform.position;
         
-        Vector3 v2 = PlayerMB.Instance.m_forward - transform.position;
+        Vector3 v2 = pFor - transform.position;
         
-        if(v2.sqrMagnitude < v1.sqrMagnitude)
+        if (v2.sqrMagnitude < v1.sqrMagnitude)
         {
             res = true;
         }
@@ -129,5 +130,30 @@ using UnityEngine;
         return res;
     }
 
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, m_outerRadius);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, m_innerRadius);
+
+        // draw m_forward line
+        if (PlayerMB.Instance != null)
+        {
+            Vector3 pVec = PlayerMB.Instance.transform.position;
+            pVec.y = transform.position.y;
+            Vector3 pFor = PlayerMB.Instance.transform.forward * 0.2f;
+            pFor.y = transform.position.y;
+            pFor += pVec;
+
+            Vector3 v1 = pVec - transform.position;
+
+            Vector3 v2 = pFor - transform.position;
+
+            Gizmos.DrawLine(pFor, pVec);
+        }
+    }
 
 }

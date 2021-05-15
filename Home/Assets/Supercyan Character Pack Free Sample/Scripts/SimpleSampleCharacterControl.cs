@@ -116,7 +116,10 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         }
         else if (Input.GetKey("2"))
         {
-            m_animator.SetTrigger("Pickup");
+            if (PlayerMB.Instance.CanPickUpInteractiveObject())
+            {
+                m_animator.SetTrigger("Pickup");
+            }
         }
 
     }

@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4354705543123480638
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5499736849725538790, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3639e3b70d5f7dc4184f972b35d5c180, type: 2}
+    - target: {fileID: 6292093787795616054, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_Name
+      value: Item_flowers
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598732397300690047, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_objectId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598732397336174572, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_text
+      value: 'flowerpot
+
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710553987721, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710553987721, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710553987721, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710658055052, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710658055052, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710658055052, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710658055052, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710658055052, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.0047648344
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710658055052, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710658055052, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710658055052, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.9999887
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710658055052, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710658055052, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6636565710658055052, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -179.454
+      objectReference: {fileID: 0}
+    - target: {fileID: 7761402893270562092, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 2036850471192531726, guid: 0bc5273d94b5d044bb8c5cd55cadf4f3, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8163e74e17255b94a95dba6fa9a3fc20, type: 3}

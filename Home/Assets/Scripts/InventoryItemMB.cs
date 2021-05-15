@@ -8,6 +8,7 @@ public class InventoryItemMB : MonoBehaviour
 {
     static public InventoryItemMB m_selected = null;
 
+    public GameConstants.ObjectId m_objectId;
     public GameObject m_model;
     public TextMeshPro m_text;
 

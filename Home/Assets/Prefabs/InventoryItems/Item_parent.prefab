@@ -24,7 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6292093787795616054}
-  m_LocalRotation: {x: -0, y: -0, z: -0.9999887, w: 0.0047625415}
+  m_LocalRotation: {x: 0, y: 0, z: -0.9999887, w: 0.0047648344}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df53959fcd3f0949877c8cdb9fd8740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_objectId: 1
   m_model: {fileID: 6292093787890769971}
   m_text: {fileID: 6598732397336174572}
 --- !u!114 &6598732396743103938
@@ -59,6 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df53959fcd3f0949877c8cdb9fd8740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_objectId: 0
   m_model: {fileID: 0}
   m_text: {fileID: 0}
 --- !u!1 &6598732397336174574
@@ -87,7 +89,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6598732397336174574}
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -0.09}
+  m_LocalPosition: {x: 0, y: 0, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6636565710658055052}
@@ -95,7 +97,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.115, y: -0.136}
+  m_AnchoredPosition: {x: -0.133, y: -0.136}
   m_SizeDelta: {x: 17.11, y: 4.3}
   m_Pivot: {x: 0.315, y: 0.78}
 --- !u!23 &6598732397336174563
@@ -159,7 +161,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Inventory
+  m_text: "rubber \nduck\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -186,19 +188,19 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 1
-  m_fontSizeBase: 1
+  m_fontSize: 1.5
+  m_fontSizeBase: 1.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 2
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -20
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -243,27 +245,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bfd8a0388f7356d49b7a015c564ba821, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bfd8a0388f7356d49b7a015c564ba821, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bfd8a0388f7356d49b7a015c564ba821, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bfd8a0388f7356d49b7a015c564ba821, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.021
+      value: -0.053
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bfd8a0388f7356d49b7a015c564ba821, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bfd8a0388f7356d49b7a015c564ba821, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.271
+      value: 0.257
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bfd8a0388f7356d49b7a015c564ba821, type: 3}
       propertyPath: m_LocalRotation.w
@@ -296,7 +298,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: bfd8a0388f7356d49b7a015c564ba821, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 3639e3b70d5f7dc4184f972b35d5c180, type: 2}
+      objectReference: {fileID: -3444799932627526061, guid: 352009701ff1d5e4cbc528906b0b50d2, type: 3}
+    - target: {fileID: -5754084199372789682, guid: bfd8a0388f7356d49b7a015c564ba821, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 5110563612691701509, guid: 352009701ff1d5e4cbc528906b0b50d2, type: 3}
     - target: {fileID: 919132149155446097, guid: bfd8a0388f7356d49b7a015c564ba821, type: 3}
       propertyPath: m_Name
       value: model
