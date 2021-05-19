@@ -9,6 +9,7 @@ public class InventoryItemMB : MonoBehaviour
     static public InventoryItemMB m_selected = null;
 
     public GameConstants.ObjectId m_objectId;
+    public GameConstants.ObjectActionId m_actionId;
     public GameObject m_model;
     public TextMeshPro m_text;
 
@@ -42,4 +43,5 @@ public class InventoryItemMB : MonoBehaviour
         rot.z = m_rotationStart;
         m_model.transform.eulerAngles = rot;
     }
+
 }

@@ -7,17 +7,14 @@ public class InventoryMB : MonoBehaviour
     private static InventoryMB instance;
     public static InventoryMB Instance { get { return instance; } }
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
-
     public List<GameObject> m_itemPrefabs;
 
     public List<GameConstants.ObjectId> m_inventoryList;
 
     public GameObject m_inventoryTile;
+
+    public InventoryButtonMB m_action;
+    public InventoryButtonMB m_close;
 
     List<GameObject> m_items = new List<GameObject>();
 
@@ -43,6 +40,14 @@ public class InventoryMB : MonoBehaviour
     bool m_show_inventory = false;
 
     Coroutine m_moveInventoryCoroutine = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void Awake()
+    {
+        instance = this;
+    }
 
     /// <summary>
     /// Start is called before the first frame update 
@@ -272,6 +277,8 @@ public class InventoryMB : MonoBehaviour
                 change = true;
                 new_inventory_z++;
             }
+
+
             if (change)
             {
                 int idx = new_inventory_z * m_inventory_width + new_inventory_x;
@@ -289,11 +296,34 @@ public class InventoryMB : MonoBehaviour
                     m_inventoryTile.transform.localPosition = pos;
                     m_timer = 0.2f;
 
-                    InventoryItemMB.m_selected.RestoreRotation();
-                    InventoryItemMB.m_selected = m_items[idx].GetComponent<InventoryItemMB>();
+                    SetSelectedItem(idx);
                 }
             }
         }
+    }
+    
+
+    void SetSelectedItem(int idx)
+    {
+        InventoryItemMB.m_selected.RestoreRotation();
+
+        InventoryItemMB.m_selected = m_items[idx].GetComponent<InventoryItemMB>();
+
+        string s = "XXXX";
+        switch (InventoryItemMB.m_selected.m_actionId)
+        {
+            case GameConstants.ObjectActionId.HOLD:
+                s = "Hold";
+                break;
+            case GameConstants.ObjectActionId.USE:
+                s = "Use";
+                break;
+            default:
+                break;
+        }
+
+        m_action.SetWord(s);
+
     }
 
     /// <summary>
@@ -343,7 +373,5 @@ public class InventoryMB : MonoBehaviour
         }
         
     }
-
-
 
 }

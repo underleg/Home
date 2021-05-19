@@ -79,14 +79,18 @@ public class PlayerMB : MonoBehaviour
         set;
     }
 
-
+    public bool IsInventoryFullUp()
+    {
+        return (InventoryMB.Instance.CurrentItemCount() == InventoryMB.Instance.MaxItems());
+    }
+    
     public bool CanPickUpInteractiveObject()
     {
         bool res = false;
 
         if( InteractiveObject != null && 
             InteractiveObject.IsCollectable() && 
-            InventoryMB.Instance.CurrentItemCount() < InventoryMB.Instance.MaxItems() )
+            IsInventoryFullUp() == false)             
         {
             res = true;
         }

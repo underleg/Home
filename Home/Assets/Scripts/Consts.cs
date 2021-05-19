@@ -7,8 +7,16 @@ public class GameConstants
     {
         NONE = 0,
         DUCK,
-        FIRE_HYDRANT,
-        FLOWERS
+        HYDRANT,
+        FLOWERS,
+        TELEPHONE
+    };
+
+    public enum ObjectActionId
+    {
+        NONE = 0,
+        HOLD,
+        USE
     };
 
     public const float closeEnough = 0.5f;

@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
- public class InteractiveObjectMB : MonoBehaviour
+public class InteractiveObjectMB : MonoBehaviour
  {
     public enum PlayerState
     {
@@ -156,4 +155,23 @@ using UnityEngine;
         }
     }
 
+
+    protected void HandleShake(Animator a)
+    {
+        if (UpdatePlayerState())
+        {
+            if (m_playerState == PlayerState.Player_inside_active_zone)
+            {
+                a.Play("InteractiveShake");
+            }
+            else if (m_playerState == PlayerState.Player_inside_interactive_zone)
+            {
+                a.Play("ActiveShake");
+            }
+            else
+            {
+                a.Play("Idle");
+            }
+        }
+    }
 }

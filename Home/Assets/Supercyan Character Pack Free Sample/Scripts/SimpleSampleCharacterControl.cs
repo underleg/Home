@@ -1,19 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SimpleSampleCharacterControl : MonoBehaviour
 {
-    private enum ControlMode
-    {
-        /// <summary>
-        /// Up moves the character forward, left and right turn the character gradually and down moves the character backwards
-        /// </summary>
-        Tank,
-        /// <summary>
-        /// Character freely moves in the chosen direction from the perspective of the camera
-        /// </summary>
-        Direct
-    }
+    private PlayerInput m_PlayerInput;
 
     [SerializeField] private float m_moveSpeed = 2;
     [SerializeField] private float m_turnSpeed = 200;
@@ -21,8 +12,6 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     [SerializeField] private Animator m_animator = null;
     [SerializeField] private Rigidbody m_rigidBody = null;
-
-    [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
     private float m_currentV = 0;
     private float m_currentH = 0;
@@ -41,12 +30,20 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private bool m_isGrounded;
 
+    private bool m_moveLeft = false;
+    private bool m_moveRight = false;
+    private bool m_moveUp = false;
+    private bool m_moveDown = false;
+    private bool m_interact = false;
+
     private List<Collider> m_collisions = new List<Collider>();
 
     private void Awake()
     {
         if (!m_animator) { gameObject.GetComponent<Animator>(); }
         if (!m_rigidBody) { gameObject.GetComponent<Animator>(); }
+
+        m_PlayerInput = GetComponent<PlayerInput>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -106,44 +103,48 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void Update()
     {
-        if (!m_jumpInput && Input.GetKey(KeyCode.Space))
+        if (InventoryMB.Instance.IsInventoryShowing() == false)
         {
-            m_jumpInput = true;
-        }
-        else if(Input.GetKey("1"))
-        {
-            m_animator.SetTrigger("Wave");
-        }
-        else if (Input.GetKey("2"))
-        {
-            if (PlayerMB.Instance.CanPickUpInteractiveObject())
+            if(m_interact)
             {
-                m_animator.SetTrigger("Pickup");
-                PlayerMB.Instance.PickUp();
+                m_animator.SetTrigger("Wave");
             }
+            /*
+            if (!m_jumpInput && Input.GetKey(KeyCode.Space))
+            {
+                m_jumpInput = true;
+            }
+            else if (Input.GetKey("1"))
+            {
+                m_animator.SetTrigger("Wave");
+            }
+            else if (Input.GetKey("2"))
+            {
+                if (PlayerMB.Instance.IsInventoryFullUp())
+                {
+                    ScreenTextMB.Instance.SetText("No empty spaces in your inventory.");
+                }
+                else if (PlayerMB.Instance.CanPickUpInteractiveObject())
+                {
+                    m_animator.SetTrigger("Pickup");
+                    PlayerMB.Instance.PickUp();
+                }
+                else
+                {
+                    m_animator.SetTrigger("ButtonPress");                    
+                }
+                
+            }
+            */
         }
-
     }
 
     private void FixedUpdate()
     {
         m_animator.SetBool("Grounded", m_isGrounded);
 
-        switch (m_controlMode)
-        {
-            case ControlMode.Direct:
-                DirectUpdate();
-                break;
-
-            case ControlMode.Tank:
-                TankUpdate();
-                break;
-
-            default:
-                Debug.LogError("Unsupported m_state");
-                break;
-        }
-
+        DirectUpdate();
+        
         m_wasGrounded = m_isGrounded;
         m_jumpInput = false;
     }
@@ -178,18 +179,47 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         JumpingAndLanding();
     }
 
+    // 'Move' input action has been triggered.
+    public void OnMove(InputValue value)
+    {
+        Vector2 xy = value.Get<Vector2>();
+        print("x = " + xy.x);
+        print("y = " + xy.y);
+    }
+
     private void DirectUpdate()
     {
-        float v = Input.GetAxis("Vertical");
-        float h = Input.GetAxis("Horizontal");
+        
+        float v = 0.0f;
+        if(this.m_moveLeft)
+        {
+            v = -1.0f;
+        }
+        else if(this.m_moveRight)
+        {
+            v = 1.0f; 
+        }
+
+        float h = 0.0f; 
+
+        if(this.m_moveUp)
+        {
+            h = -1.0f;
+        }
+        else if(this.m_moveDown)
+        {
+            h = 1.0f;
+        }
 
         Transform camera = Camera.main.transform;
 
+        /*
         if (Input.GetKey(KeyCode.LeftShift))
         {
             v *= m_walkScale;
             h *= m_walkScale;
         }
+        */
 
         m_currentV = Mathf.Lerp(m_currentV, v, Time.deltaTime * m_interpolation);
         m_currentH = Mathf.Lerp(m_currentH, h, Time.deltaTime * m_interpolation);
@@ -233,4 +263,35 @@ public class SimpleSampleCharacterControl : MonoBehaviour
             m_animator.SetTrigger("Jump");
         }
     }
+
+    public void OnLeftInputCB(InputAction.CallbackContext context)
+    {
+        float v = context.ReadValue<float>();
+        m_moveLeft = (v > 0.2f);
+    }
+
+    public void OnRightInputCB(InputAction.CallbackContext context)
+    {
+        float v = context.ReadValue<float>();
+        m_moveRight = (v > 0.2f);
+    }
+
+    public void OnUpInputCB(InputAction.CallbackContext context)
+    {
+        float v = context.ReadValue<float>();
+        m_moveUp = (v > 0.2f);
+    }
+
+    public void OnDownInputCB(InputAction.CallbackContext context)
+    {
+        float v = context.ReadValue<float>();
+        m_moveDown = (v > 0.2f);
+    }
+
+    public void OnInteractInputCB(InputAction.CallbackContext context)
+    {
+        float v = context.ReadValue<float>();
+        m_interact = (v > 0.2f);
+    }
+
 }

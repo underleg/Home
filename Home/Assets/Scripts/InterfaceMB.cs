@@ -6,8 +6,6 @@ public class InterfaceMB : MonoBehaviour
 {
     public InventoryMB m_inventory;
 
-  
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +15,7 @@ public class InterfaceMB : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown("i"))
         {
             if (m_inventory.IsInventoryShowing())
@@ -32,5 +31,6 @@ public class InterfaceMB : MonoBehaviour
         {
             m_inventory.HandleItemSelection();
         }
+        */
     }
 }
