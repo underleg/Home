@@ -107,19 +107,6 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         {
             if(m_interact)
             {
-                m_animator.SetTrigger("Wave");
-            }
-            /*
-            if (!m_jumpInput && Input.GetKey(KeyCode.Space))
-            {
-                m_jumpInput = true;
-            }
-            else if (Input.GetKey("1"))
-            {
-                m_animator.SetTrigger("Wave");
-            }
-            else if (Input.GetKey("2"))
-            {
                 if (PlayerMB.Instance.IsInventoryFullUp())
                 {
                     ScreenTextMB.Instance.SetText("No empty spaces in your inventory.");
@@ -131,11 +118,9 @@ public class SimpleSampleCharacterControl : MonoBehaviour
                 }
                 else
                 {
-                    m_animator.SetTrigger("ButtonPress");                    
+                    m_animator.SetTrigger("ButtonPress");
                 }
-                
-            }
-            */
+            }      
         }
     }
 
