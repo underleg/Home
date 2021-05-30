@@ -15,22 +15,27 @@ public class InterfaceMB : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (Input.GetKeyDown("i"))
+        if(m_inventory.IsInventoryShowing())
         {
-            if (m_inventory.IsInventoryShowing())
+            if(InputManagerMB.Instance.m_closeInventory)
             {
+                InputManagerMB.Instance.SetToPlayerInput();
                 m_inventory.HideInventory();
             }
             else
             {
+                m_inventory.HandleItemSelection();
+            }
+        }
+        else
+        {
+            if (InputManagerMB.Instance.m_openInventory)
+            {
+                InputManagerMB.Instance.SetToInterfaceInput();
                 m_inventory.ShowInventory();
             }
         }
-        else if(m_inventory.IsInventoryShowing())
-        {
-            m_inventory.HandleItemSelection();
-        }
-        */
+
+
     }
 }

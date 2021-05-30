@@ -5458,6 +5458,263 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.2661604, y: 2.0433338, z: 1.3745823}
   m_Center: {x: -0.0024903612, y: -0.8800268, z: 0.68735147}
+--- !u!1 &1004901176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1004901179}
+  - component: {fileID: 1004901178}
+  - component: {fileID: 1004901177}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1004901177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004901176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 4632c134c034fe84d8d6f7d8a1ad7c4d, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004901178}
+        m_TargetAssemblyTypeName: Assets.Scripts.InputManagerMB, Assembly-CSharp
+        m_MethodName: OnUpInputCB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4c7d789e-5253-4c6a-a456-5b273d59a618
+    m_ActionName: CharacterController/Left[/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004901178}
+        m_TargetAssemblyTypeName: Assets.Scripts.InputManagerMB, Assembly-CSharp
+        m_MethodName: OnDownInputCB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7f71831f-6504-4787-8b18-87e48e39e466
+    m_ActionName: CharacterController/Right[/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004901178}
+        m_TargetAssemblyTypeName: Assets.Scripts.InputManagerMB, Assembly-CSharp
+        m_MethodName: OnRightInputCB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 65c9e9d4-7af6-4c2e-ab9e-8627baff4ba5
+    m_ActionName: CharacterController/Up[/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004901178}
+        m_TargetAssemblyTypeName: Assets.Scripts.InputManagerMB, Assembly-CSharp
+        m_MethodName: OnLeftInputCB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: bdb8f407-a8c4-4171-b81a-0e3136db50da
+    m_ActionName: CharacterController/Down[/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004901178}
+        m_TargetAssemblyTypeName: Assets.Scripts.InputManagerMB, Assembly-CSharp
+        m_MethodName: OnInteractInputCB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: d65e3462-0f0c-4c75-9c33-104cf2be3882
+    m_ActionName: CharacterController/Interact[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004901178}
+        m_TargetAssemblyTypeName: InputManagerMB, Assembly-CSharp
+        m_MethodName: OnCloseInventoryInputCB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 19a08f63-9a54-40a6-a526-7a9199a6d3a6
+    m_ActionName: InterfaceControls/ToggleINventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004901178}
+        m_TargetAssemblyTypeName: InputManagerMB, Assembly-CSharp
+        m_MethodName: OnOpenInventoryInputCB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 645b19d1-56b3-43e2-90a1-1e049276f93e
+    m_ActionName: CharacterController/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004901178}
+        m_TargetAssemblyTypeName: InputManagerMB, Assembly-CSharp
+        m_MethodName: OnUpInputCB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b7e125c6-d5d2-4d71-bffd-f9ccfeca2de2
+    m_ActionName: InterfaceControls/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004901178}
+        m_TargetAssemblyTypeName: InputManagerMB, Assembly-CSharp
+        m_MethodName: OnDownInputCB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5ffc9940-3614-4299-a8eb-96fe8e20549f
+    m_ActionName: InterfaceControls/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004901178}
+        m_TargetAssemblyTypeName: InputManagerMB, Assembly-CSharp
+        m_MethodName: OnRightInputCB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cd2e79e6-16ed-4ab5-93fe-9b336dd61a72
+    m_ActionName: InterfaceControls/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1004901178}
+        m_TargetAssemblyTypeName: InputManagerMB, Assembly-CSharp
+        m_MethodName: OnLeftInputCB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5f62e133-9a33-4d19-bca6-3ea8bdd4fdea
+    m_ActionName: InterfaceControls/New action
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: CharacterController
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &1004901178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004901176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c296d9c2faa324b8e55cb903c200fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_moveLeft: 0
+  m_moveRight: 0
+  m_moveUp: 0
+  m_moveDown: 0
+  m_interact: 0
+  m_openInventory: 0
+  m_closeInventory: 0
+--- !u!4 &1004901179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004901176}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1005333350
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7263,17 +7520,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1997953001238138, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
   m_PrefabInstance: {fileID: 1816372983}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1472243895 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1221030649215221295, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
-  m_PrefabInstance: {fileID: 1816372983}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1472243894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba158ff05cf30224f94bfdddec8e7635, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1472243899 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4274868087642060, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
@@ -7292,120 +7538,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_forward: {x: 3.0000038, y: -0.37, z: 7}
---- !u!114 &1472243901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1472243894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 4632c134c034fe84d8d6f7d8a1ad7c4d, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1472243895}
-        m_TargetAssemblyTypeName: SimpleSampleCharacterControl, Assembly-CSharp
-        m_MethodName: OnUpInputCB
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 4c7d789e-5253-4c6a-a456-5b273d59a618
-    m_ActionName: CharacterController/Left[/Keyboard/leftArrow]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1472243895}
-        m_TargetAssemblyTypeName: SimpleSampleCharacterControl, Assembly-CSharp
-        m_MethodName: OnDownInputCB
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 7f71831f-6504-4787-8b18-87e48e39e466
-    m_ActionName: CharacterController/Right[/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1472243895}
-        m_TargetAssemblyTypeName: SimpleSampleCharacterControl, Assembly-CSharp
-        m_MethodName: OnRightInputCB
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 65c9e9d4-7af6-4c2e-ab9e-8627baff4ba5
-    m_ActionName: CharacterController/Up[/Keyboard/upArrow]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1472243895}
-        m_TargetAssemblyTypeName: SimpleSampleCharacterControl, Assembly-CSharp
-        m_MethodName: OnLeftInputCB
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: bdb8f407-a8c4-4171-b81a-0e3136db50da
-    m_ActionName: CharacterController/Down[/Keyboard/downArrow]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1472243895}
-        m_TargetAssemblyTypeName: SimpleSampleCharacterControl, Assembly-CSharp
-        m_MethodName: OnInteractInputCB
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: d65e3462-0f0c-4c75-9c33-104cf2be3882
-    m_ActionName: CharacterController/Interact[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 19a08f63-9a54-40a6-a526-7a9199a6d3a6
-    m_ActionName: New action map/New action
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: CharacterController
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 963194227}
 --- !u!1 &1486045485
 GameObject:
   m_ObjectHideFlags: 0

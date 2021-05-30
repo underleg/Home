@@ -4,8 +4,7 @@ using UnityEngine.InputSystem;
 
 public class SimpleSampleCharacterControl : MonoBehaviour
 {
-    private PlayerInput m_PlayerInput;
-
+    
     [SerializeField] private float m_moveSpeed = 2;
     [SerializeField] private float m_turnSpeed = 200;
     [SerializeField] private float m_jumpForce = 4;
@@ -30,20 +29,12 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private bool m_isGrounded;
 
-    private bool m_moveLeft = false;
-    private bool m_moveRight = false;
-    private bool m_moveUp = false;
-    private bool m_moveDown = false;
-    private bool m_interact = false;
-
     private List<Collider> m_collisions = new List<Collider>();
 
     private void Awake()
     {
         if (!m_animator) { gameObject.GetComponent<Animator>(); }
         if (!m_rigidBody) { gameObject.GetComponent<Animator>(); }
-
-        m_PlayerInput = GetComponent<PlayerInput>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -105,7 +96,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     {
         if (InventoryMB.Instance.IsInventoryShowing() == false)
         {
-            if(m_interact)
+            if(InputManagerMB.Instance.m_interact)
             {
                 if (PlayerMB.Instance.IsInventoryFullUp())
                 {
@@ -176,22 +167,22 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     {
         
         float v = 0.0f;
-        if(this.m_moveLeft)
+        if(InputManagerMB.Instance.m_moveLeft)
         {
             v = -1.0f;
         }
-        else if(this.m_moveRight)
+        else if(InputManagerMB.Instance.m_moveRight)
         {
             v = 1.0f; 
         }
 
         float h = 0.0f; 
 
-        if(this.m_moveUp)
+        if(InputManagerMB.Instance.m_moveUp)
         {
             h = -1.0f;
         }
-        else if(this.m_moveDown)
+        else if(InputManagerMB.Instance.m_moveDown)
         {
             h = 1.0f;
         }
@@ -252,31 +243,31 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     public void OnLeftInputCB(InputAction.CallbackContext context)
     {
         float v = context.ReadValue<float>();
-        m_moveLeft = (v > 0.2f);
+        InputManagerMB.Instance.m_moveLeft = (v > 0.2f);
     }
 
     public void OnRightInputCB(InputAction.CallbackContext context)
     {
         float v = context.ReadValue<float>();
-        m_moveRight = (v > 0.2f);
+        InputManagerMB.Instance.m_moveRight = (v > 0.2f);
     }
 
     public void OnUpInputCB(InputAction.CallbackContext context)
     {
         float v = context.ReadValue<float>();
-        m_moveUp = (v > 0.2f);
+        InputManagerMB.Instance.m_moveUp = (v > 0.2f);
     }
 
     public void OnDownInputCB(InputAction.CallbackContext context)
     {
         float v = context.ReadValue<float>();
-        m_moveDown = (v > 0.2f);
+        InputManagerMB.Instance.m_moveDown = (v > 0.2f);
     }
 
     public void OnInteractInputCB(InputAction.CallbackContext context)
     {
         float v = context.ReadValue<float>();
-        m_interact = (v > 0.2f);
+        InputManagerMB.Instance.m_interact = (v > 0.2f);
     }
 
 }

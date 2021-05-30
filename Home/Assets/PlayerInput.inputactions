@@ -44,6 +44,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "OpenInventory",
+                    "type": "Button",
+                    "id": "645b19d1-56b3-43e2-90a1-1e049276f93e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -101,6 +109,17 @@
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "afb6a8c4-37b3-46fc-b0a4-00fd6fa56fc0",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -109,9 +128,41 @@
             "id": "648bc307-9ab0-4ed5-82fa-a6984213f116",
             "actions": [
                 {
-                    "name": "ToggleINventory",
+                    "name": "CloseInventory",
                     "type": "Button",
                     "id": "19a08f63-9a54-40a6-a526-7a9199a6d3a6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Left",
+                    "type": "Button",
+                    "id": "b7e125c6-d5d2-4d71-bffd-f9ccfeca2de2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "RIght",
+                    "type": "Button",
+                    "id": "5ffc9940-3614-4299-a8eb-96fe8e20549f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Up",
+                    "type": "Button",
+                    "id": "cd2e79e6-16ed-4ab5-93fe-9b336dd61a72",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "5f62e133-9a33-4d19-bca6-3ea8bdd4fdea",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -120,12 +171,56 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "d3813104-307a-4849-aafe-f927fa4d9724",
+                    "id": "91c76820-a36e-49af-b9d7-3006e7d2f5de",
                     "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ToggleINventory",
+                    "action": "CloseInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09269447-b548-4c71-8572-5dd22378f879",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b32f7672-0afa-4f8b-9283-680478b7c16e",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RIght",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a8a7fb73-2e2c-4042-a75e-eede98e1583e",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "82fb8e63-db96-4116-817c-1f3ea17d652b",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

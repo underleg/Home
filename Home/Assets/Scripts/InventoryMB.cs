@@ -257,22 +257,23 @@ public class InventoryMB : MonoBehaviour
             int new_inventory_z = m_current_inventory_z;
 
             bool change = false;
-            if (Input.GetKey(KeyCode.LeftArrow) && m_current_inventory_x > 0)
+
+            if (InputManagerMB.Instance.m_moveLeft && m_current_inventory_x > 0)
             {
                 change = true;
                 new_inventory_x--;
             }
-            else if (Input.GetKey(KeyCode.RightArrow) && m_current_inventory_x < m_inventory_width - 1)
+            else if (InputManagerMB.Instance.m_moveRight && m_current_inventory_x < m_inventory_width - 1)
             {
                 change = true;
                 new_inventory_x++;
             }
-            if (Input.GetKey(KeyCode.UpArrow) && m_current_inventory_z > 0)
+            if (InputManagerMB.Instance.m_moveUp && m_current_inventory_z > 0)
             {
                 change = true;
                 new_inventory_z--;
             }
-            else if (Input.GetKey(KeyCode.DownArrow) && m_current_inventory_z < m_inventory_height - 1)
+            else if (InputManagerMB.Instance.m_moveDown && m_current_inventory_z < m_inventory_height - 1)
             {
                 change = true;
                 new_inventory_z++;
