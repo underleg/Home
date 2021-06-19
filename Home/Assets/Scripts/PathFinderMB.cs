@@ -46,6 +46,8 @@ public class PathFinderMB : MonoBehaviour
     /// <returns></returns>
     IEnumerator FindPath(Vector3 start, Vector3 end)
     {
+        
+
         List<Node> res = null;
         bool pathSuccess = false;
 

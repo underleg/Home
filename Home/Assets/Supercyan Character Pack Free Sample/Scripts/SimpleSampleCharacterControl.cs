@@ -94,10 +94,13 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void Update()
     {
+        ProfilerMB.m_profileTimer1.Begin();
+
         if (InventoryMB.Instance.IsInventoryShowing() == false)
         {
             if(InputManagerMB.Instance.m_interact)
             {
+                InputManagerMB.Instance.m_interact = false;
                 if (PlayerMB.Instance.IsInventoryFullUp())
                 {
                     ScreenTextMB.Instance.SetText("No empty spaces in your inventory.");
@@ -113,6 +116,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
                 }
             }      
         }
+        ProfilerMB.m_profileTimer1.End();
     }
 
     private void FixedUpdate()

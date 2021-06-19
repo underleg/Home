@@ -39,8 +39,6 @@ public class PlayerMB : MonoBehaviour
     void Update()
     {
         UpdateForwardVector();
-
-
     }
 
     void OnCollisionEnter(Collision collision)

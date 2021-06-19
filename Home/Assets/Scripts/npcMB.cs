@@ -11,15 +11,16 @@ public class npcMB : MovingObjectMB
     {
         Undefined,
         Idle,
-        Wave,
         Wander,
         Wander_thinking,
         Head_to_Target,
         Talking,
-        Listening
+        Listening,
+        Face_player
     };
 
     NPCState m_state = NPCState.Undefined;
+    int m_substate = 0;
     
     float m_timer;
 
@@ -29,9 +30,8 @@ public class npcMB : MovingObjectMB
     Node m_targetNode;
 
     List<Node> m_path;
-
-    
-   float m_turnSpeed = 2.0f;
+ 
+    float m_turnSpeed = 2.0f;
 
     public float m_moveSpeed = 1.5f;
 
@@ -45,7 +45,6 @@ public class npcMB : MovingObjectMB
 
     Collider m_myCollider;
 
- 
     // Start is called before the first frame update
     override protected void Start()
     {
@@ -82,19 +81,20 @@ public class npcMB : MovingObjectMB
     void InitState(NPCState newState)
     {
         m_state = newState;
-        
+        m_substate = 0;
+
         switch (newState)
         {
             case NPCState.Idle:
                 InitIdle();
                 break;
-
-            case NPCState.Wave:
-                InitWave();
-                break;
-
+       
             case NPCState.Wander:
                 InitWander();
+                break;
+
+            case NPCState.Face_player:
+                InitFacePlayer();
                 break;
 
             default:
@@ -115,11 +115,11 @@ public class npcMB : MovingObjectMB
                     HandleIdle();
                     break;
 
-                case NPCState.Wave:
-                    HandleWave();
+               case NPCState.Wander:
                     break;
 
-                case NPCState.Wander:
+                case NPCState.Face_player:
+                    HandleFacePlayer();
                     break;
 
                 default:
@@ -239,24 +239,19 @@ public class npcMB : MovingObjectMB
 
         //rotate us over time according to speed until we are in the required rotation
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * m_turnSpeed);
-    
     }
 
-    /// WAVE STATE ///
-    private void InitWave()
+    bool IsFacingTarget(Vector3 tgt)
     {
-        m_animator.SetFloat("MoveSpeed", 0.0f);
-        m_timer = 3.0f; // 3 seconds 
-        m_animator.SetTrigger("Wave");
-    }
+        Vector3 fwd = (m_forward - transform.position).normalized;
+        tgt = (tgt - transform.position).normalized;
 
-    void HandleWave()
-    {
-        m_timer -= Time.deltaTime;
-        if (m_timer < 0.0f) // todo - replace with events in animator
-        {
-            InitState(NPCState.Idle);
-        }
+        //create the rotation we need to be in to look at the target
+        Quaternion lookRotation = Quaternion.LookRotation(tgt);
+  
+        float angle = Quaternion.Angle(transform.rotation, lookRotation);
+
+        return (angle < 5.0f);
     }
 
     /// IDLE STATE ///
@@ -268,20 +263,52 @@ public class npcMB : MovingObjectMB
     void HandleIdle()
     {
         int r = Random.Range(0, 120);
-        if (r == 1)
-        {
-            InitState(NPCState.Wave);
-        }
-        else if (r == 2 || r == 3)
+        if (r == 2 || r == 3)
         {
             InitState(NPCState.Wander);
         }
-        else if(r == 4)
+        else if(r == 5)
         {
-            m_thoughtBubble.ShowThought("...");
+            
+            InitState(NPCState.Face_player);
         }
     }
 
+    // Face player
+    private void InitFacePlayer()
+    {
+        m_animator.SetFloat("MoveSpeed", 0.0f);
+    }
+
+    void HandleFacePlayer()
+    {
+        Vector3 plyr = PlayerMB.Instance.transform.position;
+
+        TurnToFaceTarget(plyr);
+
+        switch(m_substate)
+        {
+            case 0:
+                if (IsFacingTarget(plyr))
+                {
+                    m_thoughtBubble.ShowThought("Hiya!");
+                    m_animator.SetTrigger("Wave");
+                    m_substate++;
+                    m_timer = 3.0f;
+                }
+                break;
+
+            case 1:
+                m_timer -= Time.deltaTime;
+                if (m_timer < 0.0f)
+                {
+                    InitState(NPCState.Idle);
+                }
+                break;
+            default:
+                break;
+        }
+    }
 
     bool AtTargetNode(Node n)
     {

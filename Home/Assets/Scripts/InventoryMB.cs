@@ -92,7 +92,6 @@ public class InventoryMB : MonoBehaviour
 
     public void AddNewItem(InteractiveObjectMB obj)
     {
-        print("Adding new item");
         m_inventoryList.Add(obj.m_objectId);
         GameObject go = GetItemPrefab(obj.m_objectId);
         GameObject newGO = GameObject.Instantiate(go, this.transform);

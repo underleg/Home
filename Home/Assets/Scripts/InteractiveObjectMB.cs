@@ -131,7 +131,7 @@ public class InteractiveObjectMB : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        // Draw a yellow sphere at the transform's position
+        // Draw a sphere at the transform's position
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, m_outerRadius);
 
